@@ -1,4 +1,4 @@
-package com.shiwenping.library
+package com.shiwenping.toast
 
 import android.app.Dialog
 import android.content.Context
@@ -6,7 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
-import com.shiwenping.library.impl.ToastDialogListener
+import com.shiwenping.toast.impl.ToastDialogListener
 
 /**
  * 弹出的对话框

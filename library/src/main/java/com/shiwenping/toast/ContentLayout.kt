@@ -1,6 +1,5 @@
-package com.shiwenping.library
+package com.shiwenping.toast
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -11,9 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import java.util.jar.Attributes
 
 /**
  * 内容布局，可实现动态圆角

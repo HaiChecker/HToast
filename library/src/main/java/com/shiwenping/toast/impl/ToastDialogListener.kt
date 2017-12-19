@@ -1,4 +1,4 @@
-package com.shiwenping.library.impl
+package com.shiwenping.toast.impl
 
 import android.app.Dialog
 import android.view.View

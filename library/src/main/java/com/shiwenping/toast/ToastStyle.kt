@@ -1,4 +1,4 @@
-package com.shiwenping.library
+package com.shiwenping.toast
 
 /**
  * 进度类型

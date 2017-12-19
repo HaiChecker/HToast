@@ -1,4 +1,4 @@
-package com.shiwenping.library;
+package com.shiwenping.toast;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

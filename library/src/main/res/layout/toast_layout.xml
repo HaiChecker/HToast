@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.shiwenping.library.ContentLayout
+    <com.shiwenping.toast.ContentLayout
         android:id="@+id/contentPanel"
         android:layout_gravity="center"
         app:default_color="@color/default_color"
@@ -36,5 +36,5 @@
             android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </com.shiwenping.library.ContentLayout>
+    </com.shiwenping.toast.ContentLayout>
 </FrameLayout>

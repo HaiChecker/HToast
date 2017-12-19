@@ -1,10 +1,10 @@
-package com.shiwenping.library
+package com.shiwenping.toast
 
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Handler
-import com.shiwenping.library.impl.ToastDialogListener
-import com.shiwenping.library.impl.ToastViewListener
+import com.shiwenping.toast.impl.ToastDialogListener
+import com.shiwenping.toast.impl.ToastViewListener
 
 /**
  * Toast创建，设置，显示等待

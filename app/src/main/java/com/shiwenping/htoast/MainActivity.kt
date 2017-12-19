@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import com.shiwenping.library.HToast
-import com.shiwenping.library.ToastStyle
+import com.shiwenping.toast.HToast
+import com.shiwenping.toast.ToastStyle
 
 class MainActivity : AppCompatActivity() {
     var toast : HToast? = null

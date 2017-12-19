@@ -1,4 +1,4 @@
-package com.shiwenping.library
+package com.shiwenping.toast
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.*
 import android.widget.FrameLayout
-import com.shiwenping.library.impl.ToastViewListener
+import com.shiwenping.toast.impl.ToastViewListener
 
 /**
  * ToastView

@@ -1,4 +1,4 @@
-package com.shiwenping.library;
+package com.shiwenping.toast;
 
 import org.junit.Test;
 

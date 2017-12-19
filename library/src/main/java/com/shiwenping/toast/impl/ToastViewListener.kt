@@ -1,7 +1,7 @@
-package com.shiwenping.library.impl
+package com.shiwenping.toast.impl
 
 import android.view.View
-import com.shiwenping.library.ToastStyle
+import com.shiwenping.toast.ToastStyle
 
 /**
  * Created by shiwenping on 17-12-19 上午11:09.
