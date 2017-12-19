@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toast = HToast.create(this)
+        toast = HToast.create(this,ToastStyle.TOAST_INFO)
 
     }
     fun click(view : View){
