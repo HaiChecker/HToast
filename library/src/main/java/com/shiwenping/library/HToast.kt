@@ -3,151 +3,117 @@ package com.shiwenping.library
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
+import com.shiwenping.library.impl.ToastDialogListener
+import com.shiwenping.library.impl.ToastViewListener
 
 /**
  * Toast创建，设置，显示等待
  * Created by haichecker on 2017/12/18.
  */
-class HToast(context: Context?) {
-    var toastDialog : ToastDialog? = null
-    var tView : ToastView? = null
-    var context : Context? = null
-    //默认圆角大小
-    var radius : Float = 0.0f
-        set(value) {
-            field = value
-            tView!!.contentPanel!!.setCornerRadius(value)
-    }
+class HToast(context: Context?, toastStyle: ToastStyle) {
 
-    var handler : Handler? = null
-    //默认状态为INFO提示
-    var style : Style = Style.TOAST_INFO
-    set(value) {
-
-        if (tView == null || tView!!.contentPanel == null){
-            return
-        }
-        tView!!.isPay = false
-        if (style == Style.TOAST_PROGRESS || value != Style.TOAST_PROGRESS)
-        {
-            if (tView!!.contentPanel!!.image!!.animation != null) {
-                tView!!.contentPanel!!.image!!.animation.cancel()
-            }
-        }
-        field = value
-        when(value)
-        {
-            Style.TOAST_PROGRESS -> {
-                tView!!.isPay = true
-                tView!!.contentPanel!!.image!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.msg_icon_zj_default))
-                if (tView!!.contentPanel!!.image!!.animation != null) {
-                    tView!!.contentPanel!!.image!!.animation.start()
-                }
-            }
-            Style.TOAST_INFO -> {
-                tView!!.contentPanel!!.image!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.msg_icon_wz_default))
-            }
-            Style.TOAST_ERROR -> {
-                tView!!.contentPanel!!.image!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.msg_icon_zjsb_default))
-            }
-            Style.TOAST_SUCCESS ->{
-                tView!!.contentPanel!!.image!!.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.msg_icon_ok_default))
-            }
-        }
-    }
-    //提示的文字
-    var text : String = ""
-    set(value) {
-        field = value
-        tView!!.contentPanel!!.text!!.text = text
-    }
+    private var toastDialog: ToastDialogListener? = null
+    private var toastView: ToastViewListener? = null
+    private var handler: Handler?
+    private var context: Context?
 
     init {
         handler = Handler()
         this.context = context
-        toastDialog = ToastDialog(context)
-        tView = ToastView(context)
-        toastDialog!!.setContentView(tView)
-//        toastDialog!!.contentPanel!!.text!!.text = text
+        toastDialog = getToastDialog()
+        toastView = getToastView()
+    }
+
+    fun getToastDialog(): ToastDialogListener {
+        return ToastDialog(context)
+    }
+
+    fun getToastView(): ToastViewListener {
+        return ToastView(context)
+    }
+
+    fun setText(text: String): HToast {
+        toastView!!.setText(text)
+        return this
+    }
+
+    fun setStyle(toastStyle: ToastStyle): HToast {
+        toastView!!.setStyle(toastStyle)
+        return this
     }
 
     /**
      * 隐藏
      */
-    fun hide()
-    {
+    fun hide() {
         hide(0)
     }
 
     /**
      * 隐藏，带延迟执行
      */
-    fun hide(delay: Long)
-    {
-        hide(delay,null)
+    fun hide(delay: Long) {
+        hide(delay, null)
     }
 
     /**
      * 隐藏，带延迟执行，回调同志
      */
-    fun hide(delay : Long,hide:DialogInterface.OnDismissListener?)
-    {
+    fun hide(delay: Long, hide: DialogInterface.OnDismissListener?) {
         if (delay.compareTo(0) == 0) {
-            toastDialog!!.dismiss()
-            if (hide != null)
-            {
-                hide.onDismiss(toastDialog)
+            toastView!!.onHide()
+            toastDialog!!.getDialog().dismiss()
+            if (hide != null) {
+                hide.onDismiss(toastDialog!!.getDialog())
             }
-        }else{
+        } else {
             handler!!.postDelayed(Runnable {
-                toastDialog!!.dismiss()
-                if (hide != null)
-                {
-                    hide.onDismiss(toastDialog)
+                toastView!!.onHide()
+                toastDialog!!.getDialog().dismiss()
+                if (hide != null) {
+                    hide.onDismiss(toastDialog!!.getDialog())
                 }
-            },delay)
+            }, delay)
         }
     }
 
-    fun show()
-    {
-        show(0,null)
+    fun show() {
+        show(0, null)
     }
 
 
-    fun show(delay: Long)
-    {
-        show(delay,null)
+    fun show(delay: Long) {
+        show(delay, null)
     }
 
-    fun show(delay: Long,show:DialogInterface.OnShowListener?)
-    {
+    fun show(delay: Long, show: DialogInterface.OnDismissListener?) {
+        if (toastView != null) {
+            toastDialog!!.setView(toastView!!.getShowView())
+        }
         if (delay.compareTo(0) == 0) {
-            toastDialog!!.show()
-            if (show != null)
-            {
-                show.onShow(toastDialog)
-            }
-        }else{
+            toastView!!.onShow()
+            toastDialog!!.getDialog().show()
+        } else {
+            toastDialog!!.getDialog().show()
             handler!!.postDelayed(Runnable {
-                toastDialog!!.show()
-                if (show != null)
-                {
-                    show.onShow(toastDialog)
+                if (show != null) {
+                    toastView!!.onShow()
+                    toastDialog!!.getDialog().dismiss()
+                    show.onDismiss(toastDialog!!.getDialog())
                 }
-            },delay)
+            }, delay)
         }
     }
 
     companion object {
-        fun create(context: Context?) : HToast
-        {
-            return HToast(context)
+        fun create(context: Context?): HToast {
+            return HToast(context, ToastStyle.TOAST_INFO)
+        }
+
+        fun create(context: Context?, toastStyle: ToastStyle): HToast {
+            return HToast(context, toastStyle)
         }
     }
-
 
 
 }
