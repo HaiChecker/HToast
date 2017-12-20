@@ -12,6 +12,8 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+        val l : Long = 1000
+        System.out.println(l.compareTo(0))
         assertEquals(4, 2 + 2)
     }
 }

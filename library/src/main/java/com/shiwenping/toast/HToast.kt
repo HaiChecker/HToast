@@ -72,7 +72,7 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
                 hide.onDismiss(toastDialog!!.getDialog())
             }
         } else {
-            handler!!.postDelayed(Runnable {
+            handler!!.postDelayed({
                 toastView!!.onHide()
                 toastDialog!!.getDialog().dismiss()
                 if (hide != null) {
@@ -95,17 +95,16 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
         if (toastView != null) {
             toastDialog!!.setView(toastView!!.getShowView())
         }
+        toastView!!.onShow()
         if (delay.compareTo(0) == 0) {
-            toastView!!.onShow()
             toastDialog!!.getDialog().show()
         } else {
             toastDialog!!.getDialog().show()
-            handler!!.postDelayed(Runnable {
+            handler!!.postDelayed({
                 if (show != null) {
-                    toastView!!.onShow()
-                    toastDialog!!.getDialog().dismiss()
                     show.onDismiss(toastDialog!!.getDialog())
                 }
+                toastDialog!!.getDialog().dismiss()
             }, delay)
         }
     }
