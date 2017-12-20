@@ -20,9 +20,9 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
     init {
         handler = Handler()
         this.context = context
-        this.setStyle(toastStyle)
         toastDialog = getToastDialog()
         toastView = getToastView()
+        this.setStyle(toastStyle)
     }
 
     fun getToastDialog(): ToastDialogListener {
