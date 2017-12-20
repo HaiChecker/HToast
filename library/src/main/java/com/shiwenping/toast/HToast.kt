@@ -43,6 +43,10 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
         return this
     }
 
+    fun isShowing(): Boolean {
+        return toastDialog!!.getDialog().isShowing
+    }
+
     /**
      * 隐藏
      */
