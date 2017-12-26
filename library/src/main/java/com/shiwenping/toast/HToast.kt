@@ -3,6 +3,7 @@ package com.shiwenping.toast
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Handler
+import android.text.TextUtils
 import com.shiwenping.toast.impl.ToastDialogListener
 import com.shiwenping.toast.impl.ToastViewListener
 
@@ -34,7 +35,12 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
     }
 
     fun setText(text: String): HToast {
-        toastView!!.setText(text)
+        if (TextUtils.isEmpty(text)) {
+            return this;
+        }
+        if (toastView != null) {
+            toastView!!.setText(text)
+        }
         return this
     }
 
