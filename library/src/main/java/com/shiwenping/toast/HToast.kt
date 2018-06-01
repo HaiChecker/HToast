@@ -22,18 +22,18 @@ class HToast {
     constructor(context: Context?, toastStyle: ToastStyle) {
         this.context = context
         this.setStyle(toastStyle)
+        toastDialog = getToastDialog()
+        toastView = getToastView()
     }
 
     constructor(context: Context?, toastStyle: ToastStyle, callBack: ToastCallBack) {
         this.context = context
         this.setStyle(toastStyle)
         this.callBack = callBack
+        toastDialog = callBack.getToastDialog()
+        toastView = callBack.getToastView()
     }
 
-    init {
-        toastDialog = if (callBack == null) getToastDialog() else callBack!!.getToastDialog()
-        toastView = if (callBack == null) getToastView() else callBack!!.getToastView()
-    }
 
     private fun getToastDialog(): ToastDialogListener {
         return ToastDialog(context)
