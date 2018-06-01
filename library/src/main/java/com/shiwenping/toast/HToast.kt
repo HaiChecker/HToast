@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Handler
 import android.text.TextUtils
+import com.shiwenping.toast.impl.ToastCallBack
 import com.shiwenping.toast.impl.ToastDialogListener
 import com.shiwenping.toast.impl.ToastViewListener
 
@@ -11,26 +12,34 @@ import com.shiwenping.toast.impl.ToastViewListener
  * Toast创建，设置，显示等待
  * Created by haichecker on 2017/12/18.
  */
-class HToast(context: Context?, toastStyle: ToastStyle) {
-
+class HToast {
     private var toastDialog: ToastDialogListener? = null
     private var toastView: ToastViewListener? = null
-    private var handler: Handler?
+    private var handler: Handler = Handler()
     private var context: Context?
+    private var callBack: ToastCallBack? = null
 
-    init {
-        handler = Handler()
+    constructor(context: Context?, toastStyle: ToastStyle) {
         this.context = context
-        toastDialog = getToastDialog()
-        toastView = getToastView()
         this.setStyle(toastStyle)
     }
 
-    fun getToastDialog(): ToastDialogListener {
+    constructor(context: Context?, toastStyle: ToastStyle, callBack: ToastCallBack) {
+        this.context = context
+        this.setStyle(toastStyle)
+        this.callBack = callBack
+    }
+
+    init {
+        toastDialog = if (callBack == null) getToastDialog() else callBack!!.getToastDialog()
+        toastView = if (callBack == null) getToastView() else callBack!!.getToastView()
+    }
+
+    private fun getToastDialog(): ToastDialogListener {
         return ToastDialog(context)
     }
 
-    fun getToastView(): ToastViewListener {
+    private fun getToastView(): ToastViewListener {
         return ToastView(context)
     }
 
@@ -78,7 +87,7 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
                 hide.onDismiss(toastDialog!!.getDialog())
             }
         } else {
-            handler!!.postDelayed({
+            handler.postDelayed({
                 toastView!!.onHide()
                 toastDialog!!.getDialog().dismiss()
                 if (hide != null) {
@@ -106,7 +115,7 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
             toastDialog!!.getDialog().show()
         } else {
             toastDialog!!.getDialog().show()
-            handler!!.postDelayed({
+            handler.postDelayed({
                 if (show != null) {
                     show.onDismiss(toastDialog!!.getDialog())
                 }
@@ -122,6 +131,10 @@ class HToast(context: Context?, toastStyle: ToastStyle) {
 
         fun create(context: Context?, toastStyle: ToastStyle): HToast {
             return HToast(context, toastStyle)
+        }
+
+        fun create(context: Context?, toastStyle: ToastStyle, callBack: ToastCallBack): HToast {
+            return HToast(context, toastStyle, callBack)
         }
     }
 
