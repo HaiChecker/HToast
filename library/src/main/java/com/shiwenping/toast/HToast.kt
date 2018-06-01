@@ -6,6 +6,7 @@ import android.os.Handler
 import android.text.TextUtils
 import com.shiwenping.toast.impl.ToastCallBack
 import com.shiwenping.toast.impl.ToastDialogListener
+import com.shiwenping.toast.impl.ToastListener
 import com.shiwenping.toast.impl.ToastViewListener
 
 /**
@@ -80,21 +81,16 @@ class HToast {
      * 隐藏，带延迟执行，回调同志
      */
     fun hide(delay: Long, hide: DialogInterface.OnDismissListener?) {
-        if (delay.compareTo(0) == 0) {
-            toastView!!.onHide()
-            toastDialog!!.getDialog().dismiss()
-            if (hide != null) {
-                hide.onDismiss(toastDialog!!.getDialog())
-            }
-        } else {
-            handler.postDelayed({
-                toastView!!.onHide()
-                toastDialog!!.getDialog().dismiss()
-                if (hide != null) {
-                    hide.onDismiss(toastDialog!!.getDialog())
+        handler.postDelayed({
+            toastView!!.onHide(object : ToastListener {
+                override fun onHide() {
+                    toastDialog!!.getDialog().dismiss()
+                    if (hide != null) {
+                        hide.onDismiss(toastDialog!!.getDialog())
+                    }
                 }
-            }, delay)
-        }
+            })
+        }, delay)
     }
 
     fun show() {

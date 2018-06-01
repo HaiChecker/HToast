@@ -34,7 +34,10 @@ interface ToastViewListener {
     /**
      * 隐藏
      */
+    @Deprecated("deprecated")
     fun onHide()
+
+    fun onHide(listener: ToastListener)
 
     /**
      * 显示的View
