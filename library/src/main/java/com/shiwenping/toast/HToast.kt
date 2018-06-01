@@ -21,17 +21,17 @@ class HToast {
 
     constructor(context: Context?, toastStyle: ToastStyle) {
         this.context = context
-        this.setStyle(toastStyle)
         toastDialog = getToastDialog()
         toastView = getToastView()
+        this.setStyle(toastStyle)
     }
 
     constructor(context: Context?, toastStyle: ToastStyle, callBack: ToastCallBack) {
         this.context = context
-        this.setStyle(toastStyle)
-        this.callBack = callBack
         toastDialog = callBack.getToastDialog()
         toastView = callBack.getToastView()
+        this.setStyle(toastStyle)
+        this.callBack = callBack
     }
 
 
